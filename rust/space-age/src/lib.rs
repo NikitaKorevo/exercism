@@ -13,7 +13,12 @@ impl From<u64> for Duration {
 }
 
 pub trait Planet {
-    fn years_during(d: &Duration) -> f64;
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64;
+
+    fn years_during(d: &Duration) -> f64 {
+        d.0 as f64
+            / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * Self::ORBITAL_PERIOD_IN_EARTH_YEARS)
+    }
 }
 
 pub struct Mercury;
@@ -26,42 +31,26 @@ pub struct Uranus;
 pub struct Neptune;
 
 impl Planet for Mercury {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 0.2408467)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 0.2408467;
 }
 impl Planet for Venus {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 0.61519726)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 0.61519726;
 }
 impl Planet for Earth {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 1.0;
 }
 impl Planet for Mars {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 1.8808158)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 1.8808158;
 }
 impl Planet for Jupiter {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 11.862615)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 11.862615;
 }
 impl Planet for Saturn {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 29.447498)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 29.447498;
 }
 impl Planet for Uranus {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 84.016846)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 84.016846;
 }
 impl Planet for Neptune {
-    fn years_during(d: &Duration) -> f64 {
-        d.0 as f64 / (ONE_YEAR_ON_PLANET_EARTH_IN_SECONDS as f64 * 164.79132)
-    }
+    const ORBITAL_PERIOD_IN_EARTH_YEARS: f64 = 164.79132;
 }
