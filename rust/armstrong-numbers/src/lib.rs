@@ -1,11 +1,7 @@
 pub fn is_armstrong_number(num: u32) -> bool {
-    u32::to_string(&num)
+    num.to_string()
         .chars()
-        .map(|char| {
-            char::to_digit(char, 10)
-                .unwrap()
-                .pow(u32::to_string(&num).len() as u32)
-        })
+        .map(|char| char.to_digit(10).unwrap().pow(num.to_string().len() as u32))
         .sum::<u32>()
         == num
 }
