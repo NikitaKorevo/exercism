@@ -28,38 +28,28 @@ pub fn annotate(garden: &[&str]) -> Vec<String> {
                 continue;
             }
 
-            // left
-            if column_index != 0 {
-                let left_index = column_index - 1;
+            let start_index = if column_index == 0 {
+                0
+            } else {
+                column_index - 1
+            };
 
-                if result[row_index][left_index] != -1 {
-                    result[row_index][left_index] += 1;
+            let end_index = if column_index + 1 == width {
+                column_index
+            } else {
+                column_index + 1
+            };
+
+            // middle
+            for index in start_index..=end_index {
+                if result[row_index][index] == -1 {
+                    continue;
                 }
-            }
-
-            // right
-            if column_index != width - 1 {
-                let right_index = column_index + 1;
-
-                if result[row_index][right_index] != -1 && right_index < width {
-                    result[row_index][right_index] += 1;
-                }
+                result[row_index][index] += 1
             }
 
             // bottom
             if row_index + 1 != height {
-                let start_index = if column_index == 0 {
-                    0
-                } else {
-                    column_index - 1
-                };
-
-                let end_index = if column_index + 1 == width {
-                    column_index
-                } else {
-                    column_index + 1
-                };
-
                 for index in start_index..=end_index {
                     if result[row_index + 1][index] == -1 {
                         continue;
@@ -70,18 +60,6 @@ pub fn annotate(garden: &[&str]) -> Vec<String> {
 
             //top
             if row_index != 0 {
-                let start_index = if column_index == 0 {
-                    0
-                } else {
-                    column_index - 1
-                };
-
-                let end_index = if column_index + 1 == width {
-                    column_index
-                } else {
-                    column_index + 1
-                };
-
                 for index in start_index..=end_index {
                     if result[row_index - 1][index] == -1 {
                         continue;
