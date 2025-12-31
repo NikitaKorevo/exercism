@@ -13,29 +13,21 @@ impl<'a> HighScores<'a> {
     }
 
     pub fn latest(&self) -> Option<u32> {
-        if let Some(a) = self.scores.last() {
-            Some(*a)
-        } else {
-            None
-        }
+        self.scores.last().copied()
     }
 
     pub fn personal_best(&self) -> Option<u32> {
-        if let Some(best) = self.scores.iter().max() {
-            Some(*best)
-        } else {
-            None
-        }
+        self.scores.iter().max().copied()
     }
 
     pub fn personal_top_three(&self) -> Vec<u32> {
-        let mut array: Vec<u32> = self.scores.iter().map(|number| *number).collect();
+        let mut array: Vec<u32> = self.scores.to_vec();
         array.sort();
         array.reverse();
-        if let Some(array) = array.chunks(3).next() {
-            array.to_vec()
-        } else {
-            vec![]
+
+        match array.chunks(3).next() {
+            Some(value) => value.to_vec(),
+            None => vec![],
         }
     }
 }
