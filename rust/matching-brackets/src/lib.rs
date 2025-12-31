@@ -5,30 +5,21 @@ pub fn brackets_are_balanced(string: &str) -> bool {
         println!("opening_brackets123 {:?}", opening_brackets);
 
         match char {
-            '[' => opening_brackets.push(char),
-            '{' => opening_brackets.push(char),
-            '(' => opening_brackets.push(char),
-            ']' if *opening_brackets.last().unwrap_or(&'_') != '[' => return false,
+            '[' | '{' | '(' => opening_brackets.push(char),
             ']' => {
-                if *opening_brackets.last().unwrap_or(&'_') == '[' {
-                    opening_brackets.pop();
-                } else {
+                if opening_brackets.pop() != Some('[') {
                     return false;
-                }
+                };
             }
             '}' => {
-                if *opening_brackets.last().unwrap_or(&'_') == '{' {
-                    opening_brackets.pop();
-                } else {
+                if opening_brackets.pop() != Some('{') {
                     return false;
-                }
+                };
             }
             ')' => {
-                if *opening_brackets.last().unwrap_or(&'_') == '(' {
-                    opening_brackets.pop();
-                } else {
+                if opening_brackets.pop() != Some('(') {
                     return false;
-                }
+                };
             }
             _ => (),
         };
