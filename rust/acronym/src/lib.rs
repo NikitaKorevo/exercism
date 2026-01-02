@@ -1,7 +1,6 @@
 pub fn abbreviate(phrase: &str) -> String {
     phrase
-        .replace("-", " ")
-        .split_whitespace()
+        .split(['-', ' '])
         .map(|word| {
             if word == word.to_uppercase() {
                 word.get(0..1).unwrap().to_string()
