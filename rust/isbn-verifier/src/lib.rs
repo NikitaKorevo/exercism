@@ -1,27 +1,19 @@
 /// Determines whether the supplied string is a valid ISBN number
 pub fn is_valid_isbn(isbn: &str) -> bool {
     let isbn: String = isbn.replace('-', "");
+    let points: Vec<u32> = isbn
+        .chars()
+        .enumerate()
+        .filter_map(|(index, char)| match char {
+            'X' if index == 9 => Some(10),
+            '0'..='9' => char.to_digit(10).map(|number| number * (10 - index as u32)),
+            _ => None,
+        })
+        .collect();
 
-    if isbn.len() != 10
-        || !isbn
-            .chars()
-            .enumerate()
-            .all(|(index, char)| char.is_numeric() || (index == 9 && char == 'X'))
-    {
+    if points.len() != 10 {
         return false;
     }
 
-    let sum: u32 = isbn
-        .chars()
-        .rev()
-        .enumerate()
-        .fold(0, |acc, (index, char)| {
-            acc + (index as u32 + 1)
-                * match char {
-                    'X' => 10,
-                    char => char.to_digit(10).unwrap(),
-                }
-        });
-
-    sum % 11 == 0
+    points.iter().sum::<u32>() % 11 == 0
 }
